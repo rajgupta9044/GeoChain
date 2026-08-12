@@ -12,7 +12,7 @@ import { inspectGeoJSON } from './geojson.js';
 import { pinGeoJSON } from './ipfs.js';
 
 const app = express(); const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: config.maxFileSize } });
-app.use(helmet()); app.use(cors({ origin: config.frontendUrl })); app.use(express.json());
+app.use(helmet()); app.use(cors({ origin: (origin, callback) => { if (!origin || config.frontendUrls.includes(origin)) return callback(null, true); return callback(new Error('CORS origin is not allowed')); } })); app.use(express.json());
 app.get('/', (_, res) => res.json({ service: 'GEOCHAIN API', frontend: config.frontendUrl, health: '/api/health', message: 'Open the frontend URL to use the portal.' }));
 app.get('/api/health', (_, res) => res.json({ ok: true, service: 'geochain-api', database: storeBackend() }));
 app.get('/api/blockchain/config', (_, res) => res.json({ contractAddress: config.contractAddress, network: config.blockchainNetwork, enabled: Boolean(config.blockchainRpcUrl && config.contractAddress) }));

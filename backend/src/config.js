@@ -9,6 +9,7 @@ export const config = {
   jwtSecret: process.env.JWT_SECRET || 'development-only-secret-change-me',
   mongoUri: process.env.MONGODB_URI || '',
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
+  frontendUrls: (process.env.FRONTEND_URL || 'http://localhost:5173').split(',').map(value => value.trim()).filter(Boolean),
   blockchainRpcUrl: process.env.BLOCKCHAIN_RPC_URL || '',
   contractAddress: process.env.CONTRACT_ADDRESS || '',
   blockchainNetwork: process.env.BLOCKCHAIN_NETWORK || 'sepolia',

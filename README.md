@@ -364,28 +364,28 @@ stateDiagram-v2
 
 ```mermaid
 sequenceDiagram
-    actor Provider
-    participant UI as React + ethers.js
-    participant MM as MetaMask
-    participant Chain as Sepolia Contract
-    participant API as Express API
-    participant RPC as Sepolia RPC
-    participant DB as MongoDB
+    participant Provider
+    participant UI
+    participant MetaMask
+    participant Contract
+    participant API
+    participant RPC
+    participant MongoDB
 
-    Provider->>UI: Click Register with MetaMask
-    UI->>MM: Request registerDataset(datasetId, hash, reference)
-    alt Provider cancels
-        MM-->>UI: ACTION_REJECTED
-        UI-->>Provider: Registration cancelled; dataset remains pending
-    else Provider confirms
-        MM->>Chain: Submit transaction
-        Chain-->>MM: Transaction hash
-        UI->>Chain: Wait for confirmation
-        UI->>API: POST blockchain-confirm with tx hash
-        API->>RPC: eth_getTransactionReceipt
-        RPC-->>API: Successful receipt
-        API->>DB: Set status to VERIFIED
-        API-->>UI: Verified dataset
+    Provider->>UI: Click registration button
+    UI->>MetaMask: Request transaction
+    alt Cancelled
+        MetaMask-->>UI: Rejected transaction
+        UI-->>Provider: Show cancellation message
+    else Confirmed
+        MetaMask->>Contract: Submit registration
+        Contract-->>MetaMask: Return transaction hash
+        UI->>Contract: Wait for confirmation
+        UI->>API: Send transaction hash
+        API->>RPC: Check transaction receipt
+        RPC-->>API: Return successful receipt
+        API->>MongoDB: Set status to VERIFIED
+        API-->>UI: Show verified dataset
     end
 ```
 
@@ -563,6 +563,111 @@ Important rules:
 - Use a test wallet and Sepolia ETH for development.
 
 ## Installation and usage
+
+## Production deployment: Vercel + Render
+
+The project supports both local development and separate production hosting:
+
+```text
+Local:       Vite http://localhost:5173  ->  Express http://localhost:4000
+Production:  Vercel frontend             ->  Render backend -> MongoDB Atlas
+```
+
+### Deploy the backend to Render
+
+1. Push the repository to GitHub.
+2. In Render, create a **Web Service** from the repository.
+3. Use these settings:
+
+```text
+Root Directory: backend
+Runtime:        Node
+Build Command:  npm install
+Start Command:  npm start
+Health Check:   /api/health
+```
+
+4. Add these Render environment variables:
+
+```env
+NODE_ENV=production
+PORT=10000
+JWT_SECRET=<long-random-secret>
+MONGODB_URI=<MongoDB Atlas connection string>
+FRONTEND_URL=https://<your-vercel-project>.vercel.app,http://localhost:5173
+BLOCKCHAIN_RPC_URL=<Alchemy Sepolia endpoint>
+CONTRACT_ADDRESS=<deployed contract address>
+BLOCKCHAIN_NETWORK=sepolia
+IPFS_API_URL=<optional IPFS API URL>
+IPFS_API_TOKEN=<optional IPFS token>
+```
+
+Render provides the public backend URL, for example:
+
+```text
+https://geochain-api.onrender.com
+```
+
+The frontend API base URL will be:
+
+```text
+https://geochain-api.onrender.com/api
+```
+
+### Deploy the frontend to Vercel
+
+1. Import the GitHub repository into Vercel.
+2. Use the repository root as the project directory.
+3. Set the build command to:
+
+```text
+npm run build --workspace frontend
+```
+
+4. Set the output directory to:
+
+```text
+frontend/dist
+```
+
+5. Add this Vercel environment variable:
+
+```env
+VITE_API_URL=https://<your-render-service>.onrender.com/api
+```
+
+6. Deploy the frontend.
+7. Copy the final Vercel URL into Render's `FRONTEND_URL` value. If you use a custom domain, include that domain too, separated by commas.
+
+The repository includes `vercel.json` for SPA rewrites, so routes such as `/login`, `/dashboard`, `/about`, and `/datasets/:id` work after a direct refresh.
+
+The repository includes `render.yaml` with the Render service configuration. You can use it as an Infrastructure-as-Code blueprint or configure the same values in the Render dashboard.
+
+### Production/local behavior
+
+The same source code supports both environments:
+
+- Local frontend uses `VITE_API_URL=http://localhost:4000/api`.
+- Local backend uses `FRONTEND_URL=http://localhost:5173`.
+- Vercel frontend uses the Render API URL through `VITE_API_URL`.
+- Render backend accepts the Vercel origin through `FRONTEND_URL`.
+- MongoDB Atlas is used in production; local MongoDB can be used during development.
+
+After changing a Vercel environment variable, redeploy the frontend because Vite embeds `VITE_*` values during the build.
+
+### Production deployment checklist
+
+- [ ] `.env` is not committed.
+- [ ] MongoDB Atlas network access allows the Render service.
+- [ ] `MONGODB_URI` points to the production database.
+- [ ] `JWT_SECRET` is long and unique.
+- [ ] `FRONTEND_URL` exactly matches the Vercel URL, including `https://`.
+- [ ] `VITE_API_URL` exactly matches the Render API URL plus `/api`.
+- [ ] Render health check returns `{ "ok": true }`.
+- [ ] Vercel can open `/login` and `/dashboard` directly.
+- [ ] MetaMask is connected to Sepolia.
+- [ ] RPC URL and contract address are configured.
+- [ ] Render persistent storage is planned if uploaded files must survive service replacement; IPFS is recommended for production file durability.
 
 ### Requirements
 

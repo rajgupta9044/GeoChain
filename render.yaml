@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: geochain-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: BLOCKCHAIN_RPC_URL
+        sync: false
+      - key: CONTRACT_ADDRESS
+        sync: false
+      - key: BLOCKCHAIN_NETWORK
+        value: sepolia
+      - key: IPFS_API_URL
+        sync: false
+      - key: IPFS_API_TOKEN
+        sync: false
