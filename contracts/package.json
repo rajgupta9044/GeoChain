@@ -1,0 +1,6 @@
+{
+  "name": "geochain-contracts", "private": true,
+  "scripts": { "test": "hardhat test", "compile": "hardhat compile", "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia", "grant-provider": "hardhat run scripts/grant-provider.js --network sepolia" },
+  "dependencies": { "@openzeppelin/contracts": "^5.2.0" },
+  "devDependencies": { "@nomicfoundation/hardhat-toolbox": "^5.0.0", "hardhat": "^2.22.18", "dotenv": "^16.4.7" }
+}

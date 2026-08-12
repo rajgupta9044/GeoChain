@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","name":"Sample Mumbai Roads","bbox":[72.80,18.94,72.90,19.05],"crs":{"type":"name","properties":{"name":"EPSG:4326"}},"features":[{"type":"Feature","properties":{"name":"Marine Drive sample road","city":"Mumbai","surface":"paved"},"geometry":{"type":"LineString","coordinates":[[72.819,18.944],[72.826,18.949],[72.835,18.953]]}}]}

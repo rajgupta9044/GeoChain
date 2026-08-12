@@ -1,0 +1,1 @@
+.detail-actions{display:flex;align-items:center;gap:15px;flex-wrap:wrap}.verify-button{font-size:12px;font-weight:600;color:#1f2824;cursor:pointer}.verify-button input{display:none}.verify-result{font:10px 'DM Mono';letter-spacing:.08em}.verify-result.valid{color:#558b63}.verify-result.invalid{color:#aa4636}

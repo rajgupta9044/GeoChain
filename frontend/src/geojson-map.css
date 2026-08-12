@@ -1,0 +1,6 @@
+.dataset-page .leaflet-interactive {
+  stroke: #c9694b !important;
+  stroke-width: 5px !important;
+  fill: #e78a67 !important;
+  fill-opacity: 0.42 !important;
+}

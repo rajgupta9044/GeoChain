@@ -1,0 +1,12 @@
+{
+  "name": "geochain",
+  "private": true,
+  "workspaces": ["backend", "frontend", "contracts"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace backend\" \"npm run dev --workspace frontend\"",
+    "build": "npm run build --workspace frontend",
+    "test": "npm run test --workspace backend",
+    "contract:test": "npm run test --workspace contracts"
+  },
+  "devDependencies": { "concurrently": "^9.1.2" }
+}

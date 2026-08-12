@@ -1,0 +1,136 @@
+.dashboard-page {
+  max-width: 1280px;
+  padding: 46px 5% 90px;
+}
+
+.dashboard-page .page-intro {
+  max-width: none;
+  margin: 0 0 28px;
+  padding: 38px 42px;
+  border: 1px solid #dcece5;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f5fcf8 0%, #eaf7f0 58%, #f7fbf9 100%);
+  box-shadow: 0 16px 45px rgba(38, 117, 83, .08);
+}
+
+.dashboard-page .page-intro .eyebrow {
+  color: #20805c;
+  margin-bottom: 14px;
+}
+
+.dashboard-page .page-intro h1 {
+  color: #102d2b;
+  font-size: clamp(42px, 6vw, 70px);
+  letter-spacing: -.065em;
+  margin-bottom: 12px;
+}
+
+.dashboard-page .page-intro > p:last-child {
+  max-width: 650px;
+  margin: 0;
+  color: #5e756d;
+  font-size: 15px;
+}
+
+.dashboard-page .panel {
+  border: 1px solid #dcece5;
+  border-radius: 16px;
+  padding: 34px;
+  box-shadow: 0 14px 36px rgba(38, 117, 83, .06);
+}
+
+.dashboard-page .panel h2 {
+  color: #12332f;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.dashboard-page .dashboard-stats {
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dashboard-page .dashboard-stats div {
+  border: 1px solid #dcece5;
+  border-radius: 14px;
+  background: #fff;
+  padding: 20px;
+}
+
+.dashboard-page .dashboard-stats b {
+  color: #16825b;
+  font-size: 30px;
+}
+
+.dashboard-page .dashboard-stats span {
+  color: #668078;
+}
+
+.dashboard-page .primary {
+  border-radius: 9px;
+  background: #16825b;
+  padding: 14px 21px;
+}
+
+.dashboard-page .primary:hover {
+  background: #0d6948;
+}
+
+.dashboard-page .upload-panel {
+  max-width: 860px;
+}
+
+.dashboard-page .upload-panel form {
+  max-width: none;
+  gap: 20px;
+}
+
+.dashboard-page .upload-panel label {
+  color: #55716a;
+  font: 11px 'DM Mono';
+  letter-spacing: .04em;
+}
+
+.dashboard-page .upload-panel input {
+  margin-top: 3px;
+  border: 1px solid #d4e5dd;
+  border-radius: 9px;
+  background: #fbfefc;
+  padding: 15px 16px;
+}
+
+.dashboard-page .upload-panel input:focus {
+  border-color: #16825b;
+  box-shadow: 0 0 0 3px rgba(22, 130, 91, .1);
+}
+
+.dashboard-page .user-dashboard {
+  max-width: 780px;
+  background: linear-gradient(135deg, #fff 0%, #f0faf5 100%);
+}
+
+.dashboard-page .user-dashboard p {
+  max-width: 590px;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.dashboard-page .approval {
+  border-color: #e0eee7;
+  padding: 18px 0;
+}
+
+header .brand-mark,
+header .brand span:last-child {
+  color: #16825b;
+}
+
+@media (max-width: 800px) {
+  .dashboard-page .page-intro {
+    padding: 28px 24px;
+  }
+
+  .dashboard-page .panel {
+    padding: 24px;
+  }
+}

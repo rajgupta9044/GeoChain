@@ -1,0 +1,31 @@
+.header-search input {
+  border: 0;
+  outline: 0;
+  flex: 1;
+  min-width: 0;
+  color: #34524a;
+  font-size: 10px;
+  background: transparent;
+}
+
+.header-search button {
+  border: 0;
+  background: none;
+  color: #60766e;
+  font-size: 16px;
+  padding: 0 2px;
+}
+
+.modern-header .header-search {
+  width: 290px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+@media (max-width: 850px) {
+  .modern-header .header-search {
+    display: none;
+  }
+}

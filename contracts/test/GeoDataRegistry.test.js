@@ -1,0 +1,9 @@
+const { expect } = require('chai');
+const { ethers } = require('hardhat');
+
+describe('GeoDataRegistry', function () {
+  async function deployed() { const [admin, provider, stranger] = await ethers.getSigners(); const F = await ethers.getContractFactory('GeoDataRegistry'); const registry = await F.deploy(admin.address); await registry.waitForDeployment(); await registry.grantProvider(provider.address); return { registry, admin, provider, stranger }; }
+  it('registers, versions, and reads provenance', async function () { const { registry, provider } = await deployed(); const id = ethers.id('delhi-roads'); const hash = ethers.id('file-v1'); await expect(registry.connect(provider).registerDataset(id, hash, 'bafy-v1')).to.emit(registry, 'DatasetRegistered'); await expect(registry.connect(provider).addVersion(id, ethers.id('file-v2'), 'bafy-v2')).to.emit(registry, 'DatasetVersionAdded'); const d = await registry.getDataset(id); expect(d.currentVersion).to.equal(2); const v = await registry.getVersion(id, 2); expect(v.cid).to.equal('bafy-v2'); });
+  it('rejects unauthorized registration and duplicate ids', async function () { const { registry, stranger, provider } = await deployed(); const id = ethers.id('duplicate'); await expect(registry.connect(stranger).registerDataset(id, ethers.id('x'), 'cid')).to.be.reverted; await registry.connect(provider).registerDataset(id, ethers.id('x'), 'cid'); await expect(registry.connect(provider).registerDataset(id, ethers.id('y'), 'cid2')).to.be.revertedWith('dataset exists'); });
+  it('allows owner/admin deactivation', async function () { const { registry, provider } = await deployed(); const id = ethers.id('deactivate'); await registry.connect(provider).registerDataset(id, ethers.id('x'), 'cid'); await expect(registry.connect(provider).deactivate(id)).to.emit(registry, 'DatasetDeactivated'); const d = await registry.getDataset(id); expect(d.status).to.equal(2); });
+});

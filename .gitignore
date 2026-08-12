@@ -1,0 +1,12 @@
+node_modules/
+dist/
+backend/storage/*
+!backend/storage/.gitkeep
+.env
+.env.*
+!.env.example
+coverage/
+hardhat-cache/
+contracts/cache/
+contracts/artifacts/
+artifacts/

@@ -1,0 +1,27 @@
+.catalog .content-grid {
+  grid-template-columns: minmax(300px, 0.72fr) minmax(360px, 1fr);
+  align-items: start;
+}
+
+.catalog .map-wrap {
+  height: 190px;
+}
+
+.catalog .dataset-list {
+  max-height: none;
+  overflow: visible;
+}
+
+.catalog .leaflet-container {
+  border: 1px solid var(--line);
+}
+
+@media (max-width: 800px) {
+  .catalog .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog .map-wrap {
+    height: 150px;
+  }
+}
